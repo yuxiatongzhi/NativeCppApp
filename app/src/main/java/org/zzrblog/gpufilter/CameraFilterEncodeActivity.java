@@ -2,7 +2,6 @@ package org.zzrblog.gpufilter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import org.zzrblog.nativecpp.R;
+
+import androidx.annotation.Nullable;
 
 
 /**

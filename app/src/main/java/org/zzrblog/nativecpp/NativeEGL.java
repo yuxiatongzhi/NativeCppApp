@@ -11,8 +11,12 @@ import java.io.File;
 public class NativeEGL {
 
     static {
-        System.loadLibrary("zip");
-        System.loadLibrary("native-egl");
+        try {
+            System.loadLibrary("zip");
+            System.loadLibrary("native-egl");
+        } catch (UnsatisfiedLinkError e) {
+            e.printStackTrace();
+        }
     }
 
     private Context ctx;

@@ -6,13 +6,14 @@ import android.graphics.PixelFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.GLES20;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by zzr on 2019/11/27.

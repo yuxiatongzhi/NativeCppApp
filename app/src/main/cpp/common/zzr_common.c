@@ -14,6 +14,8 @@ JavaVM * gJavaVM;
 JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM *vm, void *reserved)
 {
+    LOGI("----------JNI_OnLoad----------");
+
     LOGW("%s\n", "JNI_OnLoad startup ...");
     gJavaVM = vm;
     JNIEnv *env = NULL;

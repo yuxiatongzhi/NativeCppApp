@@ -3,6 +3,11 @@
 
 # Sets the minimum version of CMake required to build the native library.
 cmake_minimum_required(VERSION 3.4.1)
+
+message(STATUS "CMAKE_SYSTEM==>${CMAKE_SYSTEM}")
+message(STATUS "CMAKE_HOST_SYSTEM_NAME==>${CMAKE_HOST_SYSTEM_NAME}")
+message(STATUS "CMAKE_SYSTEM_NAME==>${CMAKE_SYSTEM_NAME}")
+
 # 将当前 "./src/main/cpp" 目录下的所有源文件保存到 "NATIVE_SRC" 中，然后在 add_library 方法调用。
 aux_source_directory(./src/main/cpp/common   COMMON_SRC )
 aux_source_directory(./src/main/cpp/egl      EGL_SRC )
@@ -11,11 +16,16 @@ aux_source_directory(./src/main/cpp/program  PROGRAM_SRC )
 aux_source_directory(./src/main/cpp/utils    UTILS_SRC )
 aux_source_directory(./src/main/cpp/nativegl PROJECT_SRC )
 
+message(STATUS "---------------------The following is the sorted source file---------------------")
+foreach(_var ${COMMON_SRC})
+    message(STATUS "${_var}")
+endforeach()
 
+message(STATUS "---------------------------------------------------------------------------------")
 
 # 为log_common.h 指定平台
 IF (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-    ADD_DEFINITIONS(-DWindows)
+#    ADD_DEFINITIONS(-DWindows) CMAKE_SYSTEM_NAME
 ELSE (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
     ADD_DEFINITIONS(-DLinux)
 ENDIF ()
@@ -26,12 +36,15 @@ find_library( # Sets the name of the path variable.
         # Specifies the name of the NDK library that you want CMake to locate.
         log)
 
+include_directories( AFTER
+        ./src/main/cpp/common )
+
 # 引入外部so libzip 供源文件编译
 add_library(zip
             SHARED
             IMPORTED )
 set_target_properties(zip PROPERTIES IMPORTED_LOCATION
-            ${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libzip.so)
+            ${PROJECT_SOURCE_DIR}/src/main/cpp/prebuild/${ANDROID_ABI}/libzip.so)
 set_target_properties(zip PROPERTIES LINKER_LANGUAGE CXX)
 
 add_library(

@@ -3,13 +3,14 @@ package org.zzrblog.nativecpp;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by zzr on 2019/3/12.

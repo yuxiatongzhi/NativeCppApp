@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
+
+    ndkVersion "21.3.6528147"
+
     defaultConfig {
         applicationId "org.zzrblog.nativecpp"
         minSdkVersion 26
@@ -12,6 +15,7 @@ android {
         externalNativeBuild {
             cmake {
                 //cppFlags "-frtti -fexceptions -Wc++11-extensions"
+                // c++_static
                 cppFlags '-fexceptions', '-frtti'
                 //abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
                 // 升级ndk之后，不再支持armeabi的形式，然后我的libzip.so没找到对应的arm64-v8a，很尴尬...
@@ -19,6 +23,11 @@ android {
                 arguments "-DANDROID_STL=c++_static"
                 arguments "-DANDROID_ARM_NEON=ON"
             }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a"
+//            abiFilters "arm64-v8a"
         }
     }
     buildTypes {
@@ -40,14 +49,24 @@ android {
             // 尝试改成 version "3.6.4" 一样是Unable to find CMake
             // 最终解决->手动到SDK Manager卸载CMake3.10.2 使用默认的。
             // 猜测是Gradle4.6版本不支持，以后再留意这个问题。
+            version "3.10.2"
             path "CMakeLists.txt"
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        maxProcessCount 6  //default 4
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     //testImplementation 'junit:junit:4.12'
     //androidTestImplementation 'com.android.support.test:runner:1.0.2'
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
